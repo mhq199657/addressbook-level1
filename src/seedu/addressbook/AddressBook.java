@@ -621,8 +621,8 @@ public class AddressBook {
     /**
      * Shows a message to the user
      */
-    private static void showToUser(String[] message) {
-        for (String m : message) {
+    private static void showToUser(String[] messages) {
+        for (String m : messages) {
             System.out.println(LINE_PREFIX + m);
         }
     }
@@ -725,6 +725,12 @@ public class AddressBook {
             showMessageAndExitProgram(String.format(MESSAGE_ERROR_CREATING_STORAGE_FILE, filePath));
         }
     }
+
+    /**
+     * show to user the message and exit the program.
+     *
+     * @param message message to display
+     */
     private static void showMessageAndExitProgram(String message){
         showToUser(message);
         exitProgram();
@@ -799,11 +805,11 @@ public class AddressBook {
      * @return true if the given person was found and deleted in the model
      */
     private static boolean deletePersonFromAddressBook(HashMap<PersonProperty, String> exactPerson) {
-        final boolean changed = ALL_PERSONS.remove(exactPerson);
-        if (changed) {
+        final boolean hasChanged = ALL_PERSONS.remove(exactPerson);
+        if (hasChanged) {
             savePersonsToFile(getAllPersonsInAddressBook(), storageFilePath);
         }
-        return changed;
+        return hasChanged;
     }
 
     /**
