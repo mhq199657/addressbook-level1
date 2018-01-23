@@ -339,8 +339,10 @@ public class AddressBook {
      * If a file already exists, it must be a regular file.
      */
     private static boolean hasValidFileName(Path filePath) {
-        return filePath.getFileName().toString().lastIndexOf('.') > 0
-                && (!Files.exists(filePath) || Files.isRegularFile(filePath));
+        boolean hasFileName = filePath.getFileName().toString().lastIndexOf('.') > 0;
+        boolean hasFile = Files.exists(filePath);
+        boolean isRegularFile = Files.isRegularFile(filePath);
+        return hasFileName && (!hasFile || isRegularFile);
     }
 
     /**
@@ -979,9 +981,10 @@ public class AddressBook {
      * @param personData person string representation
      */
     private static boolean isPersonDataExtractableFrom(String personData) {
+        final int NUM_OF_CORRECT_ARGUMENTS = 3;
         final String matchAnyPersonDataPrefix = PERSON_DATA_PREFIX_PHONE + '|' + PERSON_DATA_PREFIX_EMAIL;
         final String[] splitArgs = personData.trim().split(matchAnyPersonDataPrefix);
-        return splitArgs.length == 3 // 3 arguments
+        return splitArgs.length == NUM_OF_CORRECT_ARGUMENTS // correct number of arguments
                 && !splitArgs[0].isEmpty() // non-empty arguments
                 && !splitArgs[1].isEmpty()
                 && !splitArgs[2].isEmpty();
