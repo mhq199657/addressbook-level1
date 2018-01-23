@@ -604,12 +604,15 @@ public class AddressBook {
         System.out.print(LINE_PREFIX + "Enter command: ");
         String inputLine = SCANNER.nextLine();
         // silently consume all blank and comment lines
-        while (inputLine.trim().isEmpty() || inputLine.trim().charAt(0) == INPUT_COMMENT_MARKER) {
+        while (isInputLineEmpty(inputLine)) {
             inputLine = SCANNER.nextLine();
         }
         return inputLine;
     }
 
+    private static boolean isInputLineEmpty(String inputLine){
+        return inputLine.trim().isEmpty() || inputLine.trim().charAt(0) == INPUT_COMMENT_MARKER;
+    }
    /*
     * NOTE : =============================================================
     * Note how the method below uses Java 'Varargs' feature so that the
