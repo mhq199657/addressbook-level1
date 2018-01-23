@@ -260,8 +260,7 @@ public class AddressBook {
     private static void processProgramArgs(String[] args) {
         int length = args.length;
         if (length >= 2) {
-            showToUser(MESSAGE_INVALID_PROGRAM_ARGS);
-            exitProgram();
+            showMessageAndExitProgram(MESSAGE_INVALID_PROGRAM_ARGS);
         }
 
         if (length == 1) {
@@ -281,8 +280,7 @@ public class AddressBook {
     private static void setupGivenFileForStorage(String filePath) {
 
         if (!isValidFilePath(filePath)) {
-            showToUser(String.format(MESSAGE_INVALID_FILE, filePath));
-            exitProgram();
+            showMessageAndExitProgram(String.format(MESSAGE_INVALID_FILE, filePath));
         }
 
         storageFilePath = filePath;
@@ -724,11 +722,13 @@ public class AddressBook {
             storageFile.createNewFile();
             showToUser(String.format(MESSAGE_STORAGE_FILE_CREATED, filePath));
         } catch (IOException ioe) {
-            showToUser(String.format(MESSAGE_ERROR_CREATING_STORAGE_FILE, filePath));
-            exitProgram();
+            showMessageAndExitProgram(String.format(MESSAGE_ERROR_CREATING_STORAGE_FILE, filePath));
         }
     }
-
+    private static void showMessageAndExitProgram(String message){
+        showToUser(message);
+        exitProgram();
+    }
     /**
      * Converts contents of a file into a list of persons.
      * Shows error messages and exits program if any errors in reading or decoding was encountered.
@@ -739,8 +739,8 @@ public class AddressBook {
     private static ArrayList<HashMap<PersonProperty, String>> loadPersonsFromFile(String filePath) {
         final Optional<ArrayList<HashMap<PersonProperty, String>>> successfullyDecoded = decodePersonsFromStrings(getLinesInFile(filePath));
         if (!successfullyDecoded.isPresent()) {
-            showToUser(MESSAGE_INVALID_STORAGE_FILE_CONTENT);
-            exitProgram();
+            showMessageAndExitProgram(MESSAGE_INVALID_STORAGE_FILE_CONTENT);
+
         }
         return successfullyDecoded.get();
     }
@@ -754,11 +754,9 @@ public class AddressBook {
         try {
             lines = new ArrayList<>(Files.readAllLines(Paths.get(filePath)));
         } catch (FileNotFoundException fnfe) {
-            showToUser(String.format(MESSAGE_ERROR_MISSING_STORAGE_FILE, filePath));
-            exitProgram();
+            showMessageAndExitProgram(String.format(MESSAGE_ERROR_MISSING_STORAGE_FILE, filePath));
         } catch (IOException ioe) {
-            showToUser(String.format(MESSAGE_ERROR_READING_FROM_FILE, filePath));
-            exitProgram();
+            showMessageAndExitProgram(String.format(MESSAGE_ERROR_READING_FROM_FILE, filePath));
         }
         return lines;
     }
@@ -773,8 +771,7 @@ public class AddressBook {
         try {
             Files.write(Paths.get(storageFilePath), linesToWrite);
         } catch (IOException ioe) {
-            showToUser(String.format(MESSAGE_ERROR_WRITING_TO_FILE, filePath));
-            exitProgram();
+            showMessageAndExitProgram(String.format(MESSAGE_ERROR_WRITING_TO_FILE, filePath));
         }
     }
 
