@@ -1176,7 +1176,7 @@ public class AddressBook {
      * Removes prefix from the given fullString if prefix occurs at the start of the string.
      */
     private static String removePrefix(String fullString, String prefix) {
-        return fullString.replaceFirst(prefix, "");
+        return fullString.replaceFirst(prefix, ""); //replace the first instance of the prefix only
     }
     /**
      * Splits a source string into the list of substrings that were separated by whitespace.
