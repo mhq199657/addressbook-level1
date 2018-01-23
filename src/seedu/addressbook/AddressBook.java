@@ -228,7 +228,7 @@ public class AddressBook {
      */
 
     private static void showWelcomeMessage() {
-        showToUser(new String[]{DIVIDER,DIVIDER,VERSION,MESSAGE_WELCOME,DIVIDER});
+        showToUser(new String[]{DIVIDER, DIVIDER, VERSION, MESSAGE_WELCOME, DIVIDER});
     }
 
     private static void showResultToUser(String result) {
@@ -267,7 +267,7 @@ public class AddressBook {
             setupGivenFileForStorage(args[0]);
         }
 
-        if(length == 0) {
+        if (length == 0) {
             setupDefaultFileForStorage();
         }
     }
@@ -611,7 +611,7 @@ public class AddressBook {
         return inputLine;
     }
 
-    private static boolean isInputLineEmpty(String inputLine){
+    private static boolean isInputLineEmpty(String inputLine) {
         return inputLine.trim().isEmpty() || inputLine.trim().charAt(0) == INPUT_COMMENT_MARKER;
     }
    /*
@@ -666,7 +666,7 @@ public class AddressBook {
      * @param person to show
      * @return formatted listing message with index
      */
-    private static String getIndexedPersonListElementMessage(int visibleIndex, HashMap<PersonProperty, String> person){
+    private static String getIndexedPersonListElementMessage(int visibleIndex, HashMap<PersonProperty, String> person) {
         return String.format(MESSAGE_DISPLAY_LIST_ELEMENT_INDEX, visibleIndex)
                 + getMessageForFormattedPersonData(person);
     }
@@ -735,7 +735,7 @@ public class AddressBook {
      *
      * @param message message to display
      */
-    private static void showMessageAndExitProgram(String message){
+    private static void showMessageAndExitProgram(String message) {
         showToUser(message);
         exitProgram();
     }
@@ -751,7 +751,6 @@ public class AddressBook {
                 decodePersonsFromStrings(getLinesInFile(filePath));
         if (!successfullyDecoded.isPresent()) {
             showMessageAndExitProgram(MESSAGE_INVALID_STORAGE_FILE_CONTENT);
-
         }
         return successfullyDecoded.get();
     }
