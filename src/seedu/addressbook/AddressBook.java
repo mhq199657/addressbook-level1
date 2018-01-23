@@ -742,8 +742,8 @@ public class AddressBook {
      *
      * @param message message to display
      */
-    private static void showMessageAndExitProgram(String message) {
-        showToUser(message);
+    private static void showMessageAndExitProgram(String errorMessage) {
+        showToUser(errorMessage);
         exitProgram();
     }
     /**
