@@ -439,7 +439,9 @@ public class AddressBook {
      */
     private static String getMessageForSuccessfulAddPerson(HashMap<PersonProperty, String> addedPerson) {
         return String.format(MESSAGE_ADDED,
-                getNameFromPerson(addedPerson), getPhoneFromPerson(addedPerson), getEmailFromPerson(addedPerson));
+                             getNameFromPerson(addedPerson),
+                             getPhoneFromPerson(addedPerson),
+                             getEmailFromPerson(addedPerson));
     }
 
     /**
@@ -511,8 +513,9 @@ public class AddressBook {
             return MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
         }
         final HashMap<PersonProperty, String> targetInModel = getPersonByLastVisibleIndex(targetVisibleIndex);
-        return deletePersonFromAddressBook(targetInModel) ? getMessageForSuccessfulDelete(targetInModel) // success
-                                                          : MESSAGE_PERSON_NOT_IN_ADDRESSBOOK; // not found
+        return deletePersonFromAddressBook(targetInModel)
+                ? getMessageForSuccessfulDelete(targetInModel) // success
+                : MESSAGE_PERSON_NOT_IN_ADDRESSBOOK; // not found
     }
 
     /**
@@ -679,7 +682,9 @@ public class AddressBook {
      */
     private static String getMessageForFormattedPersonData(HashMap<PersonProperty, String> person) {
         return String.format(MESSAGE_DISPLAY_PERSON_DATA,
-                getNameFromPerson(person), getPhoneFromPerson(person), getEmailFromPerson(person));
+                             getNameFromPerson(person),
+                             getPhoneFromPerson(person),
+                             getEmailFromPerson(person));
     }
 
     /**
@@ -899,7 +904,9 @@ public class AddressBook {
      */
     private static String encodePersonToString(HashMap<PersonProperty, String> person) {
         return String.format(PERSON_STRING_REPRESENTATION,
-                getNameFromPerson(person), getPhoneFromPerson(person), getEmailFromPerson(person));
+                             getNameFromPerson(person),
+                             getPhoneFromPerson(person),
+                             getEmailFromPerson(person));
     }
 
     /**
