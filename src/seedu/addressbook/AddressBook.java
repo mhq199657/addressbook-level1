@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.HashMap;
-
+import java.util.Comparator;
 /*
  * NOTE : =============================================================
  * This class header comment below is brief because details of how to
@@ -88,6 +88,7 @@ public class AddressBook {
     private static final String MESSAGE_ERROR_READING_FROM_FILE = "Unexpected error: unable to read from file: %1$s";
     private static final String MESSAGE_ERROR_WRITING_TO_FILE = "Unexpected error: unable to write to file: %1$s";
     private static final String MESSAGE_PERSONS_FOUND_OVERVIEW = "%1$d persons found!";
+    private static final String MESSAGE_PERSONS_SORTED_OVERVIEW = "%1$d persons sorted!";
     private static final String MESSAGE_STORAGE_FILE_CREATED = "Created new empty storage file: %1$s";
     private static final String MESSAGE_WELCOME = "Welcome to your Address Book!";
     private static final String MESSAGE_USING_DEFAULT_FILE = "Using default storage file : " + DEFAULT_STORAGE_FILEPATH;
@@ -115,6 +116,10 @@ public class AddressBook {
     private static final String COMMAND_LIST_WORD = "list";
     private static final String COMMAND_LIST_DESC = "Displays all persons as a list with index numbers.";
     private static final String COMMAND_LIST_EXAMPLE = COMMAND_LIST_WORD;
+
+    private static final String COMMAND_SORT_WORD = "sort";
+    private static final String COMMAND_SORT_DESC = "Sorts all persons in alphabetical order and displays the sorted all persons as a list with index numbers.";
+    private static final String COMMAND_SORT_EXAMPLE = COMMAND_SORT_WORD;
 
     private static final String COMMAND_DELETE_WORD = "delete";
     private static final String COMMAND_DELETE_DESC = "Deletes a person identified by the index number used in "
@@ -383,6 +388,8 @@ public class AddressBook {
             return executeClearAddressBook();
         case COMMAND_HELP_WORD:
             return getUsageInfoForAllCommands();
+        case COMMAND_SORT_WORD:
+            return executeSortAllPersonsInAddressBook();
         case COMMAND_EXIT_WORD:
             executeExitProgramRequest();
         default:
@@ -471,7 +478,16 @@ public class AddressBook {
             getMessageForPersonsDisplayedSummary(ArrayList<HashMap<PersonProperty, String>> personsDisplayed) {
         return String.format(MESSAGE_PERSONS_FOUND_OVERVIEW, personsDisplayed.size());
     }
-
+    /**
+     * Constructs a feedback message to summarise an operation that displayed a sorted listing of persons.
+     *
+     * @param personsSorted used to generate summary
+     * @return summary message for persons sorted
+     */
+    private static String
+    getMessageForPersonsSortedSummary(ArrayList<HashMap<PersonProperty, String>> personsSorted) {
+        return String.format(MESSAGE_PERSONS_SORTED_OVERVIEW, personsSorted.size());
+    }
     /**
      * Extracts keywords from the command arguments given for the find persons command.
      *
@@ -587,6 +603,26 @@ public class AddressBook {
         return getMessageForPersonsDisplayedSummary(toBeDisplayed);
     }
 
+    /**
+     *  Sort List of persons in the address book in alphabetical order for display
+     *
+     *  @return List of persons in increasing alphabetical order, from a to z
+     */
+    private static String executeSortAllPersonsInAddressBook() {
+        ArrayList<HashMap<PersonProperty, String>> toBeSorted = getAllPersonsInAddressBook();
+        sortPersonsInAphabeticalOrder(toBeSorted);
+        showToUser(toBeSorted);
+        return getMessageForPersonsSortedSummary(toBeSorted);
+    }
+    private static void sortPersonsInAphabeticalOrder(ArrayList<HashMap<PersonProperty, String>> persons){
+        Collections.sort(persons, new Comparator<HashMap<PersonProperty, String>>(){
+            public int compare(HashMap<PersonProperty, String> h1, HashMap<PersonProperty, String > h2){
+                String h1Name = h1.get(PersonProperty.NAME);
+                String h2Name = h2.get(PersonProperty.NAME);
+                return h1Name.compareTo(h2Name);
+            }
+        });
+    }
     /**
      * Requests to terminate the program.
      */

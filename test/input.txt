@@ -92,6 +92,17 @@
   list
 
 ##########################################################
+# test sort person command
+##########################################################
+
+# last active view: [1] betsy [2] dickson
+  
+  # adds in a out-of-oreder person and sort to order
+  add Charlie Brown e/charlie.d@nus.edu.sg p/333333
+  list
+  sort
+
+##########################################################
 # test clear command
 ##########################################################
 
